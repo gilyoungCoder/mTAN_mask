@@ -52,8 +52,8 @@ class multiTimeAttention(nn.Module):
         #     print(f"score : {torch.max(scores)}")
         if mask is not None:
             # mask : 50 x 1 x 1 x 203 x 82
-            scores = scores + torch.log(mask.unsqueeze(-3) + 1e-1000)
-            # scores = scores.masked_fill(mask.unsqueeze(-3) == 0, -1e9)
+            scores = scores + torch.log(mask.unsqueeze(-3) + 1e-10)
+            scores = scores.masked_fill(mask.unsqueeze(-3) == 0, -1e9)
         p_attn = F.softmax(scores, dim = -2)
 
         

@@ -141,7 +141,14 @@ if __name__ == '__main__':
             x_aug, tp_aug = aug(observed_tp, torch.cat((observed_data, observed_mask), 2))
                     
             # x_aug_copy = x_aug.clone()
-            mask_aug = x_aug[:, :, dim:2*dim]
+            mask_aug = torch.where(
+                x_aug[:, :, dim:2*dim] < 0.5,  # 조건
+                torch.zeros_like(x_aug[:, :, dim:2*dim]),  # 조건이 True일 때 적용할 값
+                x_aug[:, :, dim:2*dim]  # 조건이 False일 때 적용할 값
+            )    
+            # mask_aug = torch.where(x_aug[:, :, dim:2*dim] < 0.5, torch.tensor(0.0), x_aug[:, :, dim:2*dim])
+            # mask_in=x_aug[:, : , dim:]
+            # mask_aug = torch.where(mask_in < 0.5, torch.zeros_like(mask_in), torch.ones_like(mask_in))
 
             data_aug = x_aug[:, :, :dim]
             # val = torch.where(mask == 1, x_aug, torch.zeros_like(x_aug))
