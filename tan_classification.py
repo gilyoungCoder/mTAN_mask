@@ -175,7 +175,7 @@ if __name__ == '__main__':
             recon_loss = -(torch.logsumexp(logpx - kl_coef * analytic_kl, dim=0).mean(0) - np.log(args.k_iwae))
             label = label.unsqueeze(0).repeat_interleave(args.k_iwae, 0).view(-1)
             ce_loss = criterion(pred_y, label)
-            loss = recon_loss + args.alpha*ce_loss + args.beta*reg_loss + args.gamma*q_loss
+            loss = recon_loss + args.alpha*ce_loss + args.beta*reg_loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
