@@ -16,8 +16,8 @@ from setmodels import *
 # from torch.utils.tensorboard import SummaryWriter
 # experiment_id = 'classification'
 # writer = SummaryWriter('runs/experiment_' + experiment_id)
-import vessl
-vessl.init()
+# import vessl
+# vessl.init()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--niters', type=int, default=2000)
@@ -192,9 +192,9 @@ if __name__ == '__main__':
         total_time += time.time() - start_time
         val_loss, val_acc, val_auc = utils.evaluate_classifier(
             rec, aug, val_loader, args=args, classifier=classifier, reconst=True, num_sample=1, dim=dim)
-        vessl.log(step = itr, payload ={'Loss/Val': val_loss,
-                                                'Accuracy/Val': val_acc,
-                                                'AUC/Val': val_auc})
+        # vessl.log(step = itr, payload ={'Loss/Val': val_loss,
+        #                                         'Accuracy/Val': val_acc,
+        #                                         'AUC/Val': val_auc})
         if val_loss <= best_val_loss:
             best_val_loss = min(best_val_loss, val_loss)
             rec_state_dict = rec.state_dict()

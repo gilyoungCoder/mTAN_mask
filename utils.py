@@ -117,12 +117,8 @@ def evaluate_classifier(model, aug, test_loader, dec=None, args=None, classifier
             x_aug, tp_aug = aug(observed_tp, torch.cat((observed_data, observed_mask), 2))
                     
             # x_aug_copy = x_aug.clone()
-            # mask_aug = torch.where(
-            #     x_aug[:, :, dim:2*dim] < 0.5,  # 조건
-            #     torch.zeros_like(x_aug[:, :, dim:2*dim]),  # 조건이 True일 때 적용할 값
-            #     torch.ones_like(x_aug[:, :, dim:2*dim])  # 조건이 False일 때 적용할 값
-            # )          
-            mask_aug = x_aug[:, :, dim:]
+      
+            mask_aug = x_aug[:, :, dim:dim*2]
             data_aug = x_aug[:, :, :dim]
             # val = torch.where(mask == 1, x_aug, torch.zeros_like(x_aug))
             
