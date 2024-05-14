@@ -11,8 +11,17 @@ import torch.nn.functional as F
 
 
 def quantization_loss(outputs):
-    rounded_outputs = outputs.round()
-    return F.mse_loss(outputs, rounded_outputs)
+    # x에 대해 2x - 1 연산 수행
+    transformed = 2 * x - 1
+    
+    # 연산 결과의 절댓값 계산
+    absolute_transformed = torch.abs(transformed)
+    
+    # 절댓값과 1의 차이에 대한 MSE 계산
+    target = torch.ones_like(absolute_transformed)  # x와 같은 크기이며 모든 값이 1인 텐서 생성
+    loss = F.mse_loss(absolute_transformed, target)  # 평균 제곱 오차 계산
+    
+    return loss
 
 def custom_softmax(scores, mask=None, dim=-2):
     """
