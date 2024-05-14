@@ -10,7 +10,7 @@ from sklearn import metrics
 import torch.nn.functional as F
 
 
-def quantization_loss(outputs):
+def quantization_loss(x):
     # x에 대해 2x - 1 연산 수행
     transformed = 2 * x - 1
     
